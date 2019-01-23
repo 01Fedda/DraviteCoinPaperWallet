@@ -9627,7 +9627,7 @@ select::-ms-expand {
 			<li style="color:black">Now type the info in the textbox.  Which is: "importprivkey Your_Private_Key" and should look exactly like the example in "Step 5".</li>
 			</ol>
 			<ol style="list-style-type:none"><b style="color:black">Step 5:</b> 
-			<li style="color:black">importprivkey 24udndkrid9939dnFej37nBeu488jabcdefGhiJ92</li>
+			<li style="color:black">importprivkey 84udndkrid9939dnFej37nBeu488jabcdefGhiJ92</li>
 			</ol>
 			<ol style="list-style-type:none"><b style="color:black">Step 6:</b> 
 			<li style="color:black">Then press Enter on your keyboard.</li>
@@ -11386,6 +11386,7 @@ ninja.wallets.singlewallet = {
   generateNewAddressAndKey: function() {
     try {
       var key = new drv.ECKey(false);
+	  key.setCompressed(true); //Fedda
       var drvAddress = key.getdrvAddress();
       var privateKeyWif = key.getdrvWalletImportFormat();
       document.getElementById("btcaddress").innerHTML = drvAddress;
@@ -11486,6 +11487,7 @@ ninja.wallets.paperwallet = {
       });
     } else {
       var key = new drv.ECKey(false);
+	  key.setCompressed(true); //Fedda
       var drvAddress = key.getdrvAddress();
       var privateKeyWif = key.getdrvWalletImportFormat();
       ninja.wallets.paperwallet.showArtisticWallet(idPostFix, drvAddress, privateKeyWif);
@@ -11587,7 +11589,8 @@ ninja.wallets.bulkwallet = {
     if (bulkWallet.csvRowsRemaining > 0) {
       bulkWallet.csvRowsRemaining--;
       var key = new drv.ECKey(false);
-      key.setCompressed(bulkWallet.compressedAddrs);
+	  key.setCompressed(true); //Fedda
+      //key.setCompressed(bulkWallet.compressedAddrs); //Fedda
       bulkWallet.csv.push((bulkWallet.csvRowLimit - bulkWallet.csvRowsRemaining + bulkWallet.csvStartIndex) + ",\"" + key.getdrvAddress() + "\",\"" + key.toString("wif")
         //+	"\",\"" + key.toString("wifcomp")    // uncomment these lines to add different private key formats to the CSV
         //+ "\",\"" + key.getdrvHexFormat()
@@ -11747,7 +11750,8 @@ ninja.wallets.detailwallet = {
   },
   populateKeyDetails: function(btcKey) {
     if (btcKey.priv != null) {
-      btcKey.setCompressed(false);
+      //btcKey.setCompressed(false);
+	  btcKey.setCompressed(true); //Fedda
       //document.getElementById("detailprivhex").innerHTML = btcKey.toString().toUpperCase();
       //document.getElementById("detailprivb64").innerHTML = btcKey.toString("base64");
       var drvAddress = btcKey.getdrvAddress();
